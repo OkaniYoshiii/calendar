@@ -1,0 +1,73 @@
+-- +goose up
+INSERT INTO childs (`name`, `birthday`, `nickname`) VALUES (
+    "Younes",
+    "2000-01-01",
+    NULL
+),(
+    "Mohamed",
+    "2000-01-01",
+    NULL
+),(
+    "Tasmin",
+    "2000-01-01",
+    NULL
+),(
+    "Zoé",
+    "2000-01-01",
+    NULL
+),(
+    "Morad",
+    "2000-01-01",
+    NULL
+),(
+    "Kais",
+    "2000-01-01",
+    NULL
+),(
+    "Elisabeth",
+    "2000-01-01",
+    NULL
+),(
+    "Imene",
+    "2000-01-01",
+    NULL
+),(
+    "Nino",
+    "2000-01-01",
+    NULL
+),(
+    "Aymen",
+    "2000-01-01",
+    NULL
+),(
+    "Anna",
+    "2000-01-01",
+    NULL
+),(
+    "Enrique",
+    "2000-01-01",
+    NULL
+),(
+    "Ayden",
+    "2000-01-01",
+    NULL
+),(
+    "Elena",
+    "2000-01-01",
+    NULL
+),(
+    "Hiba",
+    "2000-01-01",
+    NULL
+),(
+    "Jaimee",
+    "2000-01-01",
+    NULL
+),(
+    "Léonie",
+    "2000-01-01",
+    NULL
+);
+
+-- +goose down
+TRUNCATE TABLE childs;
