@@ -3,11 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/OkaniYoshiii/calendar/internal/config"
 	"github.com/OkaniYoshiii/calendar/internal/database"
 	"github.com/OkaniYoshiii/calendar/internal/handlers"
 	"github.com/OkaniYoshiii/calendar/internal/repository"
@@ -42,12 +44,32 @@ func main() {
 
 	queries := repository.New(db)
 
+	funcMap := template.FuncMap{
+		"timef": func(t time.Time, layoutStr string) string {
+			var layout string
+			switch layoutStr {
+			case "DateOnly":
+				layout = time.DateOnly
+			default:
+				layout = time.Layout
+			}
+
+			return t.Format(layout)
+		},
+	}
+
+	conf := config.Config{}
+	conf.TemplateDir = "./website/templates"
+
+	baseTmpl := template.Must(template.New("base.html").Funcs(funcMap).ParseFiles(conf.TemplateDir + "/base.html"))
+
 	mux := http.NewServeMux()
 
 	fs := http.FileServer(http.Dir("./website/dist"))
 	mux.Handle("GET /assets/", http.StripPrefix("/assets/", fs))
 	mux.Handle("GET /{$}", &handlers.HomeHandler{
-		Queries: queries,
+		Template: template.Must(template.Must(baseTmpl.Clone()).ParseFiles(conf.TemplateDir + "/home/index.html")),
+		Queries:  queries,
 	})
 
 	server := http.Server{
