@@ -18,29 +18,14 @@ func GenerateCalendar() {
 		i++
 	}
 
-	GenerateWeekCalendar(start)
-	GenerateWeekCalendar(end)
+	str, _ := GenerateWeekCalendar(start, ToConsole)
+	fmt.Print(str)
+	str2, _ := GenerateWeekCalendar(end, ToConsole)
+	fmt.Print(str2)
 }
 
-func GenerateWeekCalendar(date time.Time) {
-	weekDays := []string{
-		"Lun",
-		"Mar",
-		"Mer",
-		"Jeu",
-		"Ven",
-		"Sam",
-		"Dim",
-	}
-
-	for i, weekDay := range weekDays {
-		fmt.Printf("%-20s", weekDay)
-		if i == len(weekDays)-1 {
-			fmt.Print("\n")
-		} else {
-			fmt.Printf(" | ")
-		}
-	}
+func GenerateWeekCalendar(date time.Time, renderFunc func([7]time.Time) (string, error)) (string, error) {
+	datesInWeek := [7]time.Time{}
 
 	startDay := date.Weekday()
 	daysSinceMonday := int(startDay) - int(time.Monday)
@@ -48,12 +33,22 @@ func GenerateWeekCalendar(date time.Time) {
 	daysInWeek := 7
 	for i := range daysInWeek {
 		day := start.AddDate(0, 0, i)
-		date := fmt.Sprintf("%d-%s-%d", day.Year(), day.Month(), day.Day())
-		fmt.Printf("%-20s", date)
-		if i != daysInWeek-1 {
-			fmt.Printf(" | ")
-		} else {
-			fmt.Printf("\n")
-		}
+		datesInWeek[i] = day
 	}
+
+	return renderFunc(datesInWeek)
+}
+
+func Weekdays() [7]time.Weekday {
+	weekDays := [7]time.Weekday{
+		time.Monday,
+		time.Tuesday,
+		time.Wednesday,
+		time.Thursday,
+		time.Friday,
+		time.Saturday,
+		time.Sunday,
+	}
+
+	return weekDays
 }
