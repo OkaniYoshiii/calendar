@@ -52,3 +52,43 @@ func Weekdays() [7]time.Weekday {
 
 	return weekDays
 }
+
+func DaysInYear(year int) []time.Time {
+	start := time.Date(year, time.January, 1, 0, 0, 0, 0, time.Local)
+
+	result := [366]time.Time{}
+	i := 0
+	for day := start; day.Year() < start.Year()+1; day = day.Add(time.Hour * 24) {
+		fmt.Println(day)
+		result[i] = day
+		i++
+	}
+
+	fmt.Println(i)
+
+	fmt.Println(result[i])
+	return result[:i]
+}
+
+type Calendar struct {
+	Months [12]Month
+}
+
+type Month struct {
+	Value time.Month
+	Days  []time.Time
+}
+
+func New(val int) Calendar {
+	daysInYear := DaysInYear(val)
+
+	year := Calendar{}
+	for _, day := range daysInYear {
+		month := day.Month()
+
+		year.Months[month-1].Value = month
+		year.Months[month-1].Days = append(year.Months[month-1].Days, day)
+	}
+
+	return year
+}

@@ -25,5 +25,16 @@
                 {{ end }}
             </tbody>
         </table>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr)">
+            {{ range $i, $month := $.Calendar.Months }}
+                <div style="margin-bottom: 32px;">
+                    <p>{{ $month.Value }}</p>
+                    {{ range $i, $day := $month.Days }}
+                        <p>{{ $day }}</p>
+                    {{ end }}
+                </div>
+            {{ end }}
+        </div>
     </div>
 {{ end }}

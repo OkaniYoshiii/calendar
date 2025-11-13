@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/OkaniYoshiii/calendar/internal/calendar"
 	"github.com/OkaniYoshiii/calendar/internal/repository"
 )
 
@@ -20,8 +21,14 @@ func (handler *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	data := struct{ Childs []repository.Child }{
-		Childs: childs,
+	cal := calendar.New(2025)
+
+	data := struct {
+		Childs   []repository.Child
+		Calendar calendar.Calendar
+	}{
+		Childs:   childs,
+		Calendar: cal,
 	}
 
 	if err := handler.Template.Execute(w, data); err != nil {
