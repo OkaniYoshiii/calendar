@@ -3,6 +3,8 @@ package calendar
 import (
 	"fmt"
 	"time"
+
+	"github.com/OkaniYoshiii/calendar/internal/translation"
 )
 
 func GenerateCalendar() {
@@ -76,6 +78,7 @@ type Calendar struct {
 
 type Month struct {
 	Value time.Month
+	Label string
 	Days  []time.Time
 }
 
@@ -87,6 +90,7 @@ func New(val int) Calendar {
 		month := day.Month()
 
 		year.Months[month-1].Value = month
+		year.Months[month-1].Label = translation.Month(month)
 		year.Months[month-1].Days = append(year.Months[month-1].Days, day)
 	}
 
