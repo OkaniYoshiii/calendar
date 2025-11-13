@@ -2,9 +2,8 @@ package calendar
 
 import (
 	"fmt"
+	"strconv"
 	"time"
-
-	"github.com/OkaniYoshiii/calendar/internal/translation"
 )
 
 func GenerateCalendar() {
@@ -61,14 +60,10 @@ func DaysInYear(year int) []time.Time {
 	result := [366]time.Time{}
 	i := 0
 	for day := start; day.Year() < start.Year()+1; day = day.Add(time.Hour * 24) {
-		fmt.Println(day)
 		result[i] = day
 		i++
 	}
 
-	fmt.Println(i)
-
-	fmt.Println(result[i])
 	return result[:i]
 }
 
@@ -77,22 +72,60 @@ type Calendar struct {
 }
 
 type Month struct {
-	Value time.Month
 	Label string
 	Days  []time.Time
+	Weeks []Week
 }
 
-func New(val int) Calendar {
-	daysInYear := DaysInYear(val)
+type Week struct {
+	Days [7]Day
+}
 
-	year := Calendar{}
-	for _, day := range daysInYear {
-		month := day.Month()
+type Day struct {
+	Value int
+	Label string
+}
 
-		year.Months[month-1].Value = month
-		year.Months[month-1].Label = translation.Month(month)
-		year.Months[month-1].Days = append(year.Months[month-1].Days, day)
+func (day *Day) Valid() bool {
+	return day.Value != 0
+}
+
+func (day *Day) String() string {
+	return strconv.Itoa(day.Value)
+}
+
+func New(year int) Calendar {
+	calendar := Calendar{}
+	for i := range 12 {
+		month := time.Month(i + 1)
+		monthStart := time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
+		nextMonth := monthStart.AddDate(0, 1, 0).Month()
+		// Saturday: 6, Monday: 0, Tuesday: 1 ...
+		daysSinceMonday := (int(monthStart.Weekday()) + 6) % 7
+		duration := time.Hour * time.Duration(24*daysSinceMonday*-1)
+		monday := monthStart.Add(duration)
+
+		weeks := []Week{}
+		day := monday
+		for day.Month() != nextMonth {
+			week := Week{}
+			for i := range 7 {
+				if day.Month() != month {
+					week.Days[i] = Day{}
+				} else {
+					week.Days[i] = Day{
+						Value: day.Day(),
+					}
+				}
+
+				day = day.Add(24 * time.Hour)
+			}
+
+			weeks = append(weeks, week)
+		}
+
+		calendar.Months[i].Weeks = weeks
 	}
 
-	return year
+	return calendar
 }

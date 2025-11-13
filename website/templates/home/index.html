@@ -26,12 +26,25 @@
             </tbody>
         </table>
 
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr)">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 2rem;">
             {{ range $i, $month := $.Calendar.Months }}
                 <div style="margin-bottom: 32px;">
                     <p>{{ $month.Label }}</p>
-                    {{ range $i, $day := $month.Days }}
-                        <p>{{ $day }}</p>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr);">
+                        <p>Lun</p>
+                        <p>Mar</p>
+                        <p>Mer</p>
+                        <p>Jeu</p>
+                        <p>Ven</p>
+                        <p>Sam</p>
+                        <p>Dim</p>
+                    </div>
+                    {{ range $j, $week := $month.Weeks }}
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr);">
+                            {{ range $k, $day := $week.Days}}
+                                <p>{{ $day.Value }}</p>
+                            {{ end }}
+                        </div>
                     {{ end }}
                 </div>
             {{ end }}
