@@ -1,5 +1,5 @@
 .PHONY: run-dev
-run-dev:	
+run-dev:
 	docker compose -f compose.dev.yaml up -d
 
 .PHONY: down-dev
@@ -12,6 +12,7 @@ install:
 
 .PHONY: database-seed
 database-seed:
+	go tool goose -dir "./database/seeds" -no-versioning down
 	go tool goose -dir "./database/seeds" -no-versioning up
 
 .PHONY: tailwind-watch

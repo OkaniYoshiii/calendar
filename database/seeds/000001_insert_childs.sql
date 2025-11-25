@@ -1,23 +1,23 @@
 -- +goose up
 INSERT INTO childs (`name`, `birthday`, `nickname`) VALUES (
     "Younes",
-    "2000-01-01",
+    "2000-02-03",
     NULL
 ),(
     "Mohamed",
-    "2000-01-01",
+    "2000-05-15",
     NULL
 ),(
     "Tasmin",
-    "2000-01-01",
+    "2000-05-15",
     NULL
 ),(
     "Zoé",
-    "2000-01-01",
+    "2000-02-03",
     NULL
 ),(
     "Morad",
-    "2000-01-01",
+    "2000-03-24",
     NULL
 ),(
     "Kais",
@@ -25,35 +25,35 @@ INSERT INTO childs (`name`, `birthday`, `nickname`) VALUES (
     NULL
 ),(
     "Elisabeth",
-    "2000-01-01",
+    "2000-06-29",
     NULL
 ),(
     "Imene",
-    "2000-01-01",
+    "2000-04-21",
     NULL
 ),(
     "Nino",
-    "2000-01-01",
+    "2000-06-28",
     NULL
 ),(
     "Aymen",
-    "2000-01-01",
+    "2000-08-08",
     NULL
 ),(
     "Anna",
-    "2000-01-01",
+    "2000-09-29",
     NULL
 ),(
     "Enrique",
-    "2000-01-01",
+    "2000-10-21",
     NULL
 ),(
     "Ayden",
-    "2000-01-01",
+    "2000-26-11",
     NULL
 ),(
     "Elena",
-    "2000-01-01",
+    "2000-03-29",
     NULL
 ),(
     "Hiba",
@@ -61,11 +61,11 @@ INSERT INTO childs (`name`, `birthday`, `nickname`) VALUES (
     NULL
 ),(
     "Jaimee",
-    "2000-01-01",
+    "2000-06-16",
     NULL
 ),(
     "Léonie",
-    "2000-01-01",
+    "2000-03-23",
     NULL
 );
 
