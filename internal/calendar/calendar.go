@@ -73,7 +73,6 @@ type Calendar struct {
 
 type Month struct {
 	Label string
-	Days  []time.Time
 	Weeks []Week
 }
 
@@ -82,12 +81,18 @@ type Week struct {
 }
 
 type Day struct {
+	time.Time
+
 	Value int
 	Label string
 }
 
 func (day *Day) Valid() bool {
 	return day.Value != 0
+}
+
+func (day *Day) IsSame(other time.Time) bool {
+	return day.Year() == other.Year() && day.Month() == other.Month() && day.Day() == other.Day()
 }
 
 func (day *Day) String() string {
@@ -111,10 +116,13 @@ func New(year int) Calendar {
 			week := Week{}
 			for i := range 7 {
 				if day.Month() != month {
-					week.Days[i] = Day{}
+					week.Days[i] = Day{
+						Time: day,
+					}
 				} else {
 					week.Days[i] = Day{
 						Value: day.Day(),
+						Time:  day,
 					}
 				}
 

@@ -42,7 +42,7 @@
                     {{ range $j, $week := $month.Weeks }}
                         <div style="display: grid; grid-template-columns: repeat(7, 1fr);">
                             {{ range $k, $day := $week.Days}}
-                                <p>{{ $day.Value }}</p>
+                                <p style="{{ if $day.IsSame $.Now }} background-color: red; {{ end }}">{{ $day.Value }}</p>
                             {{ end }}
                         </div>
                     {{ end }}
