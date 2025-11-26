@@ -4,8 +4,8 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {{ range $i, $month := $.Calendar.Months }}
-                <div style="margin-bottom: 32px;">
-                    <p>{{ $month.Label }}</p>
+                <div class="mb-8 text-center">
+                    <div class="text-lg font-bold border-b-2 border-black">{{ $month.Label }}</div>
                     <div class="grid grid-cols-7">
                         <p>Lun</p>
                         <p>Mar</p>
