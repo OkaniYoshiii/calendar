@@ -9,6 +9,7 @@ import (
 
 	"github.com/OkaniYoshiii/calendar/internal/calendar"
 	"github.com/OkaniYoshiii/calendar/internal/repository"
+	"github.com/OkaniYoshiii/calendar/internal/translation"
 )
 
 type Anniversary struct {
@@ -32,7 +33,7 @@ func (handler *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				day.Payload.Childs = append(day.Payload.Childs, child)
 			}
 		}
-	})
+	}, translation.Month)
 
 	now := time.Now()
 

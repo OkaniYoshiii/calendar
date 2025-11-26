@@ -48,7 +48,10 @@ func (day *Day[T]) String() string {
 // payloadFunc is used to add additional payload on each day if wanted
 // This can be used to attach events to some days like anniversaries
 // or notes.
-func New[T any](year int, payloadFunc func(*Day[T])) Calendar[T] {
+//
+// translationFunc is used to convert a time.Month to a label that you want to
+// show to a user for example.
+func New[T any](year int, payloadFunc func(*Day[T]), translationFunc func(time.Month) string) Calendar[T] {
 	calendar := Calendar[T]{}
 	for i := range 12 {
 		month := time.Month(i + 1)
@@ -83,6 +86,7 @@ func New[T any](year int, payloadFunc func(*Day[T])) Calendar[T] {
 		}
 
 		calendar.Months[i].Weeks = weeks
+		calendar.Months[i].Label = translationFunc(month)
 	}
 
 	return calendar
