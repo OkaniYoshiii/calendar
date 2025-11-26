@@ -5,8 +5,11 @@ import (
 	"time"
 )
 
+const DaysInWeek = 7
+const MonthsInYear = 12
+
 type Calendar struct {
-	Months [12]Month
+	Months [MonthsInYear]Month
 }
 
 type Month struct {
@@ -15,7 +18,7 @@ type Month struct {
 }
 
 type Week struct {
-	Days [7]Day
+	Days [DaysInWeek]Day
 }
 
 type Day struct {
