@@ -1,30 +1,6 @@
 {{ block "main" . }}
     <div>
         <h1>Calendrier partage de la mascotte</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Surnom</th>
-                    <th>Date d'anniversaire</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{ range $index, $child := $.Childs }}
-                    <tr>
-                        <td>{{ $child.Name }}</td>
-                        <td>
-                            {{ if $child.Nickname.Valid }}
-                                {{ $child.Nickname}}
-                            {{ else }}
-                                Aucun
-                            {{ end }}
-                        </td>
-                        <td>{{ timef $child.Birthday "DateOnly" }}</td>
-                    </tr>
-                {{ end }}
-            </tbody>
-        </table>
 
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 2rem;">
             {{ range $i, $month := $.Calendar.Months }}

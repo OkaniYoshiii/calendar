@@ -37,11 +37,9 @@ func (handler *HomeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	now := time.Now()
 
 	data := struct {
-		Childs   []repository.Child
 		Calendar calendar.Calendar[Anniversary]
 		Now      time.Time
 	}{
-		Childs:   childs,
 		Calendar: cal,
 		Now:      now,
 	}
