@@ -39,10 +39,24 @@
                         <p>Sam</p>
                         <p>Dim</p>
                     </div>
-                    {{ range $j, $week := $month.Weeks }}
+                    {{ range $week := $month.Weeks }}
                         <div style="display: grid; grid-template-columns: repeat(7, 1fr);">
-                            {{ range $k, $day := $week.Days}}
-                                <p style="{{ if $day.IsSame $.Now }} background-color: red; {{ end }}">{{ $day.Value }}</p>
+                            {{ range $day := $week.Days}}
+                                <div>
+                                    {{ $childs := $day.Payload.Childs }}
+                                    {{ if gt (len $childs) 0  }}
+                                        <button data-dialog-id="dialog_{{ $day.Time.String }}" style="background-color: blue; {{ if $day.IsSame $.Now }} background-color: red; {{ end }}">{{ $day.Value }}</button>
+                                        <dialog id="dialog_{{ $day.Time.String }}">
+                                            <div>
+                                                {{ range $child := $childs }}
+                                                    <p>Anniversaire de : {{ $child.Name }}</p>
+                                                {{ end }}
+                                            </div>
+                                        </dialog>
+                                    {{ else }}
+                                        <p style="{{ if $day.IsSame $.Now }} background-color: red; {{ end }}">{{ $day.Value }}</p>
+                                    {{ end }}
+                                </div>
                             {{ end }}
                         </div>
                     {{ end }}
@@ -50,4 +64,17 @@
             {{ end }}
         </div>
     </div>
+
+    <script>
+      const buttons = document.querySelectorAll('[data-dialog-id]');
+
+      buttons.forEach((button) => {
+        const id = button.getAttribute('data-dialog-id');
+        const dialog = document.getElementById(id);
+
+        button.addEventListener('click', () => {
+          dialog.showModal();
+        })
+      })
+    </script>
 {{ end }}
