@@ -49,7 +49,7 @@ INSERT INTO childs (`name`, `birthday`, `nickname`) VALUES (
     NULL
 ),(
     "Ayden",
-    "2000-26-11",
+    "2000-11-26",
     NULL
 ),(
     "Elena",
