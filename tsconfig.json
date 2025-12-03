@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "outDir": "./website/dist/js",
+        "module": "ES2022",
+        "target": "ES2022",
+        "strict": true
+    },
+    "include": ["./website/assets/ts"]
+}
