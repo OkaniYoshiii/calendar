@@ -50,8 +50,14 @@ func main() {
 		date := start
 
 		// Pour chaque semaine de l'année entre start et end
+		childsIndexes := Indexes(childs)
 		for date.Compare(end) <= 0 {
-			for _, child := range childs {
+			fmt.Println("")
+			fmt.Println("--- Debut semaine : ", date, " ---")
+
+			closest := 0
+			for i, index := range childsIndexes {
+				child := childs[index]
 				birthday := child.Birthday
 
 				isBirthdayInWeek := IsInWeekIgnoringYear(date, birthday)
@@ -60,16 +66,38 @@ func main() {
 					continue
 				}
 
-				fmt.Println(">> Anniversaire de ", child.Name, " dans la semaine du ", date)
+				fmt.Println(">>> Anniversaire de ", child.Name, " dans la semaine du ", date)
+				closest = i
 			}
 
-			fmt.Println(">> Debut semaine : ", date)
+			index := childsIndexes[closest]
+			fmt.Println(">>> Peluche attribuée à : ", childs[index].Name)
+
+			if len(childsIndexes)-1 <= 0 {
+				fmt.Println(">>>> Pool d'enfant vidé")
+				childsIndexes = Indexes(childs)
+			} else {
+				temp := childsIndexes[closest]
+				childsIndexes[closest] = childsIndexes[len(childsIndexes)-1]
+				childsIndexes[len(childsIndexes)-1] = temp
+				childsIndexes = childsIndexes[:len(childsIndexes)-1]
+			}
+
 			date = date.AddDate(0, 0, 7)
-			fmt.Println(">> Fin semaine : ", date)
+			fmt.Println("-- Fin semaine : ", date, " --")
 		}
 
 		break
 	}
+}
+
+func Indexes[T any](slice []T) []int {
+	indexes := make([]int, len(slice))
+	for i := range len(slice) {
+		indexes[i] = i
+	}
+
+	return indexes
 }
 
 func IsInWeekIgnoringYear(base, compared time.Time) bool {
