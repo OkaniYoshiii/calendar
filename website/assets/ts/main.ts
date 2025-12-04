@@ -23,7 +23,7 @@ class Week {
 }
 
 const start = new Date(2026, 0, 1);
-const end = new Date(2026, 2, 1);
+const end = new Date(2027, 0, 1);
 const date = new Date(start.getTime());
 const childs = [
     new Child("Anna", new Date(2000, 0, 12)),
@@ -33,7 +33,7 @@ const childs = [
     new Child("Roxanne", new Date(2000, 0, 22)),
 ];
 
-distributePluchie(start, childs);
+distributePluchie(start, end, childs);
 // Récupérer les childs.length semaines suivantes
 // Regarder si des enfants ont un anniversaire pendant ces semaines
 // Si oui :
@@ -46,9 +46,13 @@ distributePluchie(start, childs);
     // Distribuer les peluches de manière équitable entre chaque enfant
 
 
-function distributePluchie(start: Date, childs: Child[]) {
+function distributePluchie(start: Date, end: Date, childs: Child[]) {
     if(childs.length <= 0) {
         throw new Error('');
+    }
+
+    if (start.getTime() > end.getTime()) {
+        return;
     }
 
     const childsPool = [...childs];
@@ -91,6 +95,8 @@ function distributePluchie(start: Date, childs: Child[]) {
         i++;
         date.setTime(date.getTime() + daysInMilliseconds(7));
     }
+
+    distributePluchie(date, end, childs);
 }
 
 function timeBetweenIgnoringYear(base: Date, compared: Date): number {
